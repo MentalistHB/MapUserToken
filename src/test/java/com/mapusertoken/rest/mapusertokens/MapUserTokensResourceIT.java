@@ -2,6 +2,7 @@ package com.mapusertoken.rest.mapusertokens;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -97,6 +98,13 @@ public class MapUserTokensResourceIT extends ItBase {
 		MapUserToken create = buildMap().token("");
 		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MAP_USER_TOKEN_COLLECTION)
 				.then().log().body().statusCode(400);
+	}
+
+	@Test
+	public void list() {
+		given().get(ApiConstants.MAP_USER_TOKEN_COLLECTION).then().log().body().statusCode(200)
+				.body("size()", is(equalTo(2)))
+				.body("id", containsInAnyOrder(map1.getId().intValue(), map2.getId().intValue()));
 	}
 
 	@Test

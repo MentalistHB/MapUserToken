@@ -1,5 +1,7 @@
 package com.mapusertoken.rest.mapusertokens;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -38,5 +40,14 @@ public class MapUserTokensResource {
 		// create
 		MapUserToken created = mapUserTokenService.create(mapUserToken);
 		return created;
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<MapUserToken> get() {
+		log.info("List all maps");
+
+		return mapUserTokenService.list();
+
 	}
 }
